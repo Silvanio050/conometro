@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Novidades em breve</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#353771;
+    --teal:#3A95B4;
+    --accent:#D8242B;
+    --glass: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.9);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(135deg, var(--dark), var(--teal));
+    color: white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    padding:20px;
+    text-align:center;
+  }
+
+  .container{
+    max-width:800px;
+    padding:30px;
+    border-radius:20px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    box-shadow:0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .logo{
+    margin-bottom:20px;
+  }
+
+  .logo img{
+    width:200px;
+    max-width:70%;
+  }
+
+  h1{
+    font-size:2.2rem;
+    margin-bottom:10px;
+    font-weight:800;
+  }
+
+  p.tagline{
+    font-size:1.1rem;
+    margin-bottom:30px;
+    color: var(--muted);
+  }
+
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+  }
+
+  .time-box{
+    background: rgba(255,255,255,0.1);
+    padding:18px 22px;
+    border-radius:12px;
+    min-width:90px;
+    transition:.3s;
+  }
+
+  .time-box:hover{ transform: translateY(-5px) scale(1.05); }
+
+  .time-box .num{
+    font-size:2rem;
+    font-weight:800;
+  }
+
+  .time-box .label{
+    margin-top:6px;
+    font-size:0.9rem;
+    text-transform:uppercase;
+    color: #ffd700;
+  }
+
+  .cta{
+    display:inline-block;
+    margin-top:10px;
+    padding:14px 28px;
+    background: var(--accent);
+    color:#fff;
+    font-weight:700;
+    border-radius:30px;
+    text-decoration:none;
+    box-shadow:0 6px 18px rgba(216,36,43,0.5);
+    transition:.3s;
+  }
+
+  .cta:hover{
+    background:#b91c22;
+    transform:translateY(-3px);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://www.marinhoatacado.com.br/wp-content/uploads/2025/03/logo-site-branco.svg" alt="Logo Marinho Atacado">
+    </div>
+    <h1>Grandes Novidades Chegando!</h1>
+    <p class="tagline">Estamos preparando algo especial para você. Fique pronto para o que vem aí.</p>
+
+    <div class="countdown">
+      <div class="time-box">
+        <div class="num" id="days">0</div>
+        <div class="label">Dias</div>
+      </div>
+      <div class="time-box">
+        <div class="num" id="hours">0</div>
+        <div class="label">Horas</div>
+      </div>
+      <div class="time-box">
+        <div class="num" id="minutes">0</div>
+        <div class="label">Minutos</div>
+      </div>
+      <div class="time-box">
+        <div class="num" id="seconds">0</div>
+        <div class="label">Segundos</div>
+      </div>
+    </div>
+
+    
+  </div>
+
+<script>
+  const targetDate = new Date("2025-09-01T00:00:00-03:00").getTime();
+
+  const $days = document.getElementById('days');
+  const $hours = document.getElementById('hours');
+  const $minutes = document.getElementById('minutes');
+  const $seconds = document.getElementById('seconds');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function update(){
+    const now = new Date().getTime();
+    let distance = targetDate - now;
+
+    if (distance <= 0) {
+      document.querySelector('.container').innerHTML = "<h1>🎉 Chegou o grande dia!</h1><p>As novidades já estão no ar. Aproveite!</p>";
+      clearInterval(timerInterval);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    $days.textContent = days;
+    $hours.textContent = pad(hours);
+    $minutes.textContent = pad(minutes);
+    $seconds.textContent = pad(seconds);
+  }
+
+  update();
+  const timerInterval = setInterval(update, 1000);
+</script>
+</body>
+</html>
